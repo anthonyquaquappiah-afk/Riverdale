@@ -48,31 +48,250 @@ h1,h2,h3{font-family:Manrope,sans-serif}
 .login-tabs{display:flex;background:var(--muted);border-radius:12px;padding:4px;gap:4px;margin-bottom:20px}.login-tab{flex:1;padding:10px;border-radius:9px;border:none;background:transparent;font-weight:700;font-size:13px;cursor:pointer}.login-tab.active{background:white;box-shadow:0 2px 8px rgba(0,0,0,.06);border:1px solid var(--line)}
 .backdrop{position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:35;display:none}.backdrop.show{display:block}
 .mob{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:white;cursor:pointer;display:none}
-
-/* === REAL MOBILE FIX === */
 @media(max-width:1024px){.sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.3s}.sidebar.open{transform:translateX(0)}.grid4{grid-template-columns:1fr 1fr}.form-grid,.grid2{grid-template-columns:1fr}.mob{display:grid;place-items:center}}
-@media(max-width:640px){
-  .topbar{padding:0 12px;height:56px}
-  .topbar span[style*="font-weight:800"]{font-size:14px}
-  #modePill,#clk{display:none !important}
-  .topbar .btn{padding:8px 12px;font-size:12px}
-  .content{padding:14px 12px}
-  .card{padding:14px;border-radius:14px}
-  .stepper{padding-bottom:4px;margin-bottom:14px}
-  .step{padding:7px 12px;font-size:11px}
-  h1{font-size:22px !important}
-  .grid4{grid-template-columns:1fr 1fr;gap:10px}
-  .kpi .val{font-size:20px}
-  .qr-box{flex-direction:column;align-items:stretch}
-  .qr-box #qrCode,.qr-box #qrReceipt{display:grid;place-items:center}
-  .ref{font-size:14px;padding:8px 12px}
-  .actions{flex-wrap:wrap;gap:10px}
-  .tbl{font-size:12px}
-  .tbl th,.tbl td{padding:8px}
-}
-
 .hidden{display:none !important}
+</style> 
+ <style>
+/* MOBILE FIX */
+@media (max-width: 768px) {
+  /* 1. Fix top header */
+  header, .top-bar {
+    flex-wrap: wrap !important;
+    padding: 10px !important;
+  }
+  /* Hide the timer and Guest Access on mobile */
+  .guest-access-btn, .timer, [class*="00:55"] {
+    display: none !important;
+  }
+  /* Make New Check-In smaller */
+  .new-checkin-btn {
+    font-size: 14px !important;
+    padding: 8px 12px !important;
+  }
+  /* 2. Fix card cutting off */
+  .card, .container, [class*="Dates"] {
+    margin: 10px !important;
+    width: auto !important;
+    max-width: 100% !important;
+  }
+  /* 3. Remove Netlify badge on mobile */
+  [class*="Powered by Netlify"] {
+    display: none !important;
+  }
+}
 </style>
 </head>
 <body>
-<!-- rest of your body stays exactly same as you sent me, don't change -->
+<div id="loginScreen" class="login-wrap">
+<div class="login-card">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><div class="brand-mark"><i data-lucide="building-2" style="width:20px;height:20px"></i></div><div><div style="font-weight:800;font-family:Manrope">Riverdale Apartment</div><div style="font-size:11px;color:var(--slate);font-weight:600">QR VERIFIED EDITION</div></div></div>
+<h2 style="font-size:22px;margin-bottom:6px">Sign in</h2><p style="font-size:13px;color:var(--slate);margin-bottom:16px">Guests sign in with email. Admin restricted.</p>
+<div class="login-tabs"><button class="login-tab active" id="tabGuest" onclick="switchLogin('guest')">Guest Access</button><button class="login-tab" id="tabAdmin" onclick="switchLogin('admin')">Admin Access</button></div>
+<div id="guestLogin">
+<div><label class="lbl">Email address</label><input class="inp" id="guestEmail" placeholder="guest@email.com" type="email"></div>
+<div style="margin-top:12px"><label class="lbl">Full Name</label><input class="inp" id="guestName" placeholder="Emma Carter"></div>
+<div style="margin-top:16px"><button class="btn btn-p" style="width:100%" onclick="loginGuest()"><i data-lucide="log-in" style="width:16px"></i> Continue as Guest</button></div>
+</div>
+<div id="adminLogin" class="hidden">
+<div><label class="lbl">Admin Email</label><input class="inp" id="adminEmail" value="admin@riverdale.com"></div>
+<div style="margin-top:12px"><label class="lbl">Password</label><input class="inp" type="password" id="adminPass" value="admin123"></div>
+<div style="margin-top:16px"><button class="btn btn-p" style="width:100%" onclick="loginAdmin()"><i data-lucide="shield-check" style="width:16px"></i> Sign in as Admin</button></div>
+<div style="margin-top:8px;font-size:11px;color:var(--slate)">admin@riverdale.com / admin123</div>
+</div>
+</div>
+</div>
+<div id="appScreen" class="app hidden">
+<aside class="sidebar" id="sb">
+<div class="brand"><div class="brand-mark"><i data-lucide="building-2" style="width:20px;height:20px"></i></div><div><div style="font-weight:800">Riverdale</div><div style="font-size:10px;color:var(--slate);font-weight:700">APARTMENT</div></div></div>
+<nav class="nav">
+<div id="navGuest">
+<div class="nav-sec">Guest Portal</div>
+<button class="nav-btn active" onclick="go('guest-home')" data-p="guest-home"><i data-lucide="home"></i> My Stay</button>
+<button class="nav-btn" onclick="go('checkin')" data-p="checkin"><i data-lucide="clipboard-check"></i> Check-In Form</button>
+<button class="nav-btn" onclick="go('guest-bookings')" data-p="guest-bookings"><i data-lucide="ticket"></i> My Bookings</button>
+<button class="nav-btn" onclick="go('guest-receipts')" data-p="guest-receipts"><i data-lucide="qr-code"></i> Receipts & QR</button>
+</div>
+<div id="navAdmin" class="hidden">
+<div class="nav-sec">Operations</div>
+<button class="nav-btn active" onclick="go('dash')" data-p="dash"><i data-lucide="layout-dashboard"></i> Admin Dashboard</button>
+<button class="nav-btn" onclick="go('checkin')" data-p="checkin"><i data-lucide="clipboard-check"></i> Guest Check-In</button>
+<button class="nav-btn" onclick="go('bookings')" data-p="bookings"><i data-lucide="calendar-days"></i> Bookings</button>
+<button class="nav-btn" onclick="go('guests')" data-p="guests"><i data-lucide="users"></i> Guests</button>
+<div class="nav-sec">Management</div>
+<button class="nav-btn" onclick="go('rooms')" data-p="rooms"><i data-lucide="building"></i> Rooms / Houses</button>
+<button class="nav-btn" onclick="go('verify')" data-p="verify"><i data-lucide="scan-qr-code"></i> ID & QR Verify</button>
+<button class="nav-btn" onclick="go('reports')" data-p="reports"><i data-lucide="bar-chart-3"></i> Reports</button>
+<button class="nav-btn" onclick="go('settings')" data-p="settings"><i data-lucide="settings-2"></i> Settings</button>
+</div>
+<div style="margin-top:auto;padding:12px;border-top:1px solid var(--line)">
+<div style="display:flex;gap:10px;align-items:center"><div style="width:34px;height:34px;border-radius:50%;background:var(--muted);border:1px solid var(--line);display:grid;place-items:center"><i data-lucide="user" style="width:16px"></i></div><div><div style="font-weight:700;font-size:12px" id="userLabel">Guest</div><div style="font-size:11px;color:var(--slate)" id="roleLabel">Guest</div></div></div>
+<button class="btn btn-g" style="width:100%;margin-top:10px;padding:9px" onclick="logout()"><i data-lucide="log-out" style="width:14px"></i> Sign out</button>
+</div>
+</nav>
+</aside>
+<div class="backdrop" id="backdrop" onclick="closeSidebar()"></div>
+<div class="main">
+<div class="topbar">
+<div style="display:flex;gap:12px;align-items:center"><button class="mob" id="menu"><i data-lucide="menu" style="width:18px"></i></button><span style="font-weight:800;font-family:Manrope">Riverdale Apartment</span><span class="pill" id="modePill">Guest Access</span></div>
+<div style="display:flex;gap:10px;align-items:center"><span class="pill" id="clk">--:--</span><button class="btn btn-p" onclick="go('checkin')"><i data-lucide="plus" style="width:16px"></i> New Check-In</button></div>
+</div>
+<div class="content">
+<section id="p-guest-home">
+<h1 style="font-size:28px">Welcome, <span id="guestWelcome">Guest</span></h1><p style="color:var(--slate);margin:6px 0 18px;font-size:13px">Kindly complete check-in form with the correct informations.</p>
+<div class="grid2">
+<div class="card"><div style="display:flex;justify-content:space-between"><h3>My Current Stay</h3><span class="badge bg-blue">QR Verified</span></div><div style="margin-top:12px;font-size:13px;color:var(--slate)">Signed in as <b id="guestEmailLabel"></b> — check-in generates auto QR for reception verification.</div><div style="margin-top:14px;display:flex;gap:8px"><button class="btn btn-p" onclick="go('checkin')"><i data-lucide="clipboard-check" style="width:16px"></i> Complete Check-In</button><button class="btn btn-g" onclick="go('guest-receipts')"><i data-lucide="qr-code" style="width:16px"></i> Show QR</button></div></div>
+<div class="card"><h3>How QR Verification Works</h3><div style="font-size:13px;color:var(--slate);margin-top:8px;line-height:1.6">• On submit, system auto-generates QR containing Ref, Name, Email, Room, Nights, Guests<br>• Reception scans QR to verify booking<br>• QR also embedded in PDF receipt<br>• Admin Verify page can paste QR content to confirm</div></div>
+</div>
+</section>
+<section id="p-dash" class="hidden">
+<h1 style="font-size:28px">Admin Dashboard</h1><p style="color:var(--slate);font-size:13px;margin:6px 0 18px">Admin only • QR Verification Enabled</p>
+<div class="grid4">
+<div class="card kpi"><div><h3>Today's Check-Ins</h3><div class="val">14</div><span class="badge bg-blue">+4</span></div><i data-lucide="concierge-bell" style="width:20px"></i></div>
+<div class="card kpi"><div><h3>Occupancy</h3><div class="val">82%</div><span class="badge bg-green">26/32</span></div><i data-lucide="building-2" style="width:20px"></i></div>
+<div class="card kpi"><div><h3>Pending QR Verify</h3><div class="val">5</div><span class="badge bg-orange">Scan</span></div><i data-lucide="scan-qr-code" style="width:20px"></i></div>
+<div class="card kpi"><div><h3>Total Guests</h3><div class="val">41</div><span class="badge bg-blue">Auto</span></div><i data-lucide="users-2" style="width:20px"></i></div>
+</div>
+<div class="grid2"><div class="card"><h3>Recent Check-Ins</h3><table class="tbl" style="margin-top:10px"><tr><th>Ref</th><th>Guest</th><th>Room</th><th>QR</th><th>PDF</th></tr><tr><td>RD-A1K92P</td><td>Emma +2</td><td>B-302</td><td><span class="badge bg-blue"><i data-lucide="qr-code" style="width:12px"></i> QR</span></td><td><button class="btn btn-g" style="padding:5px 8px" onclick="generatePDF(false)"><i data-lucide="file-down" style="width:12px"></i> PDF</button></td></tr></table></div><div class="card"><h3>Houses</h3><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px" id="mini"></div></div></div>
+</section>
+<section id="p-checkin" class="hidden">
+<h1 style="font-size:26px">Guest Check-In</h1><p style="color:var(--slate);font-size:13px;margin:6px 0 16px">7 Steps • Auto guests & nights • Auto QR + PDF</p>
+<div class="stepper" id="stepper"></div>
+<div class="card">
+<div id="s1"><h3 style="margin-bottom:12px;display:flex;gap:8px;align-items:center"><i data-lucide="user-circle" style="width:18px"></i> 1. Guest Information</h3><div class="form-grid"><div><label class="lbl">First Name *</label><input class="inp" id="fn"></div><div><label class="lbl">Last Name *</label><input class="inp" id="ln"></div><div><label class="lbl">Email *</label><input class="inp" id="em" type="email"></div><div><label class="lbl">Phone *</label><input class="inp" id="ph"></div><div><label class="lbl">Nationality</label><select class="sel" id="nat"><option>Ghana</option><option>USA</option><option>UK</option></select></div><div><label class="lbl">Purpose</label><select class="sel" id="pur"><option>Residential</option><option>Business</option></select></div></div></div>
+<div id="s2" class="hidden"><h3 style="margin-bottom:12px;display:flex;gap:8px;align-items:center"><i data-lucide="scan" style="width:18px"></i> 2. ID Upload with Preview</h3><div class="upload" onclick="document.getElementById('idFile').click()"><i data-lucide="upload-cloud" style="width:28px;margin:0 auto;display:block"></i><div style="font-weight:700;margin-top:8px">Upload Passport / Ghana Card</div><input type="file" id="idFile" accept="image/*" multiple hidden></div><div class="prev-wrap" id="prevBox"></div><div class="form-grid" style="margin-top:14px"><div><label class="lbl">ID Type</label><select class="sel" id="idType"><option>Passport</option><option>Ghana Card</option></select></div><div><label class="lbl">ID Number</label><input class="inp" id="idNum"></div></div></div>
+<div id="s3" class="hidden"><div style="display:flex;justify-content:space-between"><h3 style="display:flex;gap:8px;align-items:center"><i data-lucide="users" style="width:18px"></i> 3. Extra Guests • <span id="gLabel" style="color:var(--blue)">1 Guest</span></h3><button class="btn btn-g" onclick="addG()"><i data-lucide="user-plus" style="width:14px"></i> Add Guest</button></div><div style="background:var(--blue-10);padding:10px;border-radius:10px;margin:10px 0;font-weight:700;font-size:12px;border:1px solid #DBE3FF">Total: <b id="totalG" style="color:var(--blue)">1</b> = 1 + extras (auto)</div><div id="extraBox"></div></div>
+<div id="s4" class="hidden"><h3 style="margin-bottom:12px;display:flex;gap:8px;align-items:center"><i data-lucide="calendar" style="width:18px"></i> 4. Dates</h3><div class="form-grid"><div><label class="lbl">Check-In</label><input class="inp" type="date" id="ci"></div><div><label class="lbl">Check-Out</label><input class="inp" type="date" id="co"></div><div class="full" style="background:var(--blue-10);padding:12px;border-radius:10px;display:flex;justify-content:space-between;font-weight:800;border:1px solid #DBE3FF"><span>Nights Auto</span><span id="nCount" style="color:var(--blue)">0</span></div></div></div>
+<div id="s5" class="hidden"><h3 style="margin-bottom:12px;display:flex;gap:8px;align-items:center"><i data-lucide="door-open" style="width:18px"></i> 5. Room / House</h3><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px" id="roomGrid"></div></div>
+<div id="s6" class="hidden"><h3 style="margin-bottom:12px;display:flex;gap:8px;align-items:center"><i data-lucide="heart-handshake" style="width:18px"></i> 6. Requests & Emergency</h3><div class="form-grid"><div class="full"><label class="lbl">Special Requests</label><textarea class="ta" id="req"></textarea></div><div><label class="lbl">Emergency Name</label><input class="inp" id="en"></div><div><label class="lbl">Phone</label><input class="inp" id="ep"></div><div><label class="lbl">Relation</label><select class="sel" id="er"><option>Spouse</option><option>Parent</option></select></div><div><label class="lbl"><input type="checkbox" id="agree"> Agree to Riverdale rules</label></div></div></div>
+<div id="s7" class="hidden"><h3 style="margin-bottom:12px;display:flex;gap:8px;align-items:center"><i data-lucide="file-check-2" style="width:18px"></i> 7. Review, QR & PDF</h3><div class="review" id="review"></div>
+<div style="text-align:center;margin-top:16px"><div class="ref" id="ref">RD-XXXXXX</div>
+<div class="qr-box">
+<div id="qrCode"></div>
+<div style="text-align:left;font-size:12px;color:var(--slate);max-width:260px"><b style="color:var(--dark)">QR for Reception Verification</b><br>Scan at reception to verify booking. Contains Ref, Guest, Room, Nights, Guests, Email.<br><br><span class="badge bg-blue" id="qrText">Auto generated</span><br><br><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-g" style="padding:8px 12px;font-size:12px" onclick="downloadQR()"><i data-lucide="download" style="width:12px"></i> Download QR</button><button class="btn btn-g" style="padding:8px 12px;font-size:12px" onclick="generatePDF(false)"><i data-lucide="file-down" style="width:12px"></i> PDF with QR</button></div></div>
+</div>
+</div></div>
+<div class="actions"><button class="btn btn-g" id="prevB" onclick="prev()"><i data-lucide="arrow-left" style="width:14px"></i> Back</button><button class="btn btn-p" id="nextB" onclick="next()">Next <i data-lucide="arrow-right" style="width:14px"></i></button></div>
+</div>
+</section>
+<section id="p-bookings" class="hidden"><h1>Bookings (Admin)</h1><div class="card" style="margin-top:14px"><table class="tbl"><tr><th>Ref</th><th>Guest</th><th>Room</th><th>QR</th><th>PDF</th></tr><tr><td>RD-A1K92P</td><td>Emma</td><td>B-302</td><td><span class="badge bg-blue">QR Verified</span></td><td><button class="btn btn-p" style="padding:6px" onclick="generatePDF(false)">PDF+QR</button></td></tr></table></div></section>
+<section id="p-guest-bookings" class="hidden"><h1>My Bookings</h1><div class="card" style="margin-top:14px"><table class="tbl"><tr><th>Ref</th><th>Room</th><th>Nights</th><th>Guests</th><th>QR</th></tr><tr><td id="myRef">RD-XXXXXX</td><td id="myRoom">Pending</td><td id="myNights">0</td><td id="myGuests">1</td><td><button class="btn btn-p" style="padding:6px" onclick="go('guest-receipts')"><i data-lucide="qr-code" style="width:12px"></i> Show QR</button></td></tr></table></div></section>
+<section id="p-guests" class="hidden"><h1>Guests</h1><div class="card" style="margin-top:14px"><table class="tbl"><tr><th>Name</th><th>Total Auto</th><th>ID</th></tr><tr><td>Emma +2</td><td>3</td><td>Verified</td></tr></table></div></section>
+<section id="p-rooms" class="hidden"><h1>Rooms</h1><div class="grid2" style="margin-top:14px" id="roomsPage"></div></section>
+<section id="p-verify" class="hidden"><h1>ID & QR Verification (Admin)</h1><div class="card" style="margin-top:14px">
+<div class="grid2"><div><h3>Scan QR at Reception</h3><p style="font-size:13px;color:var(--slate);margin:8px 0">Guest shows QR from receipt. Scan with phone camera.</p><div style="background:var(--muted);padding:12px;border-radius:10px;border:1px solid var(--line);font-size:12px"><b>Expected QR format:</b><br><code style="word-break:break-all">RIVERDALE|RD-XXXXXX|Emma Carter|emma@mail.com|B-302|3 nights|3 guests|2026-10-06</code></div><div style="margin-top:12px"><label class="lbl">Paste scanned QR content to verify</label><input class="inp" id="qrInput" placeholder="Paste QR text here..."><button class="btn btn-p" style="margin-top:10px" onclick="verifyQR()"><i data-lucide="scan-qr-code" style="width:14px"></i> Verify QR</button><div id="qrVerifyResult" style="margin-top:12px"></div></div></div><div><h3>Current QR</h3><div style="display:grid;place-items:center;padding:20px;background:white;border:1px solid var(--line);border-radius:14px"><div id="qrVerify"></div></div></div></div>
+</div></section>
+<section id="p-reports" class="hidden"><h1>Reports</h1><div class="grid2" style="margin-top:14px"><div class="card">Occupancy 82%</div><div class="card">Revenue $18,240</div></div></section>
+<section id="p-settings" class="hidden"><h1>Settings</h1><div class="card" style="margin-top:14px">Riverdale • QR Verified • Blue/White • Icons</div></section>
+<section id="p-guest-receipts" class="hidden"><h1>My Receipts & QR</h1><div class="card" style="margin-top:14px"><div style="text-align:center;padding:20px"><div class="ref" id="receiptRef">RD-XXXXXX</div><div class="qr-box" style="margin-top:18px"><div id="qrReceipt"></div><div style="text-align:left;font-size:12px;color:var(--slate)"><b style="color:var(--dark)">Show this QR at Reception</b><br>Reception will scan to verify.<br><br><button class="btn btn-p" onclick="generatePDF(true)"><i data-lucide="download" style="width:16px"></i> Download PDF + QR</button><button class="btn btn-g" style="margin-top:8px" onclick="downloadQR()"><i data-lucide="download" style="width:14px"></i> Download QR PNG</button></div></div></div></div></section>
+</div>
+</div>
+</div>
+<script>
+const rooms=[{id:'A-101',name:'Block A - 101',type:'1BR Apartment',cap:2,price:85,status:'Available'},{id:'A-102',name:'Block A - 102',type:'2BR Apartment',cap:4,price:130,status:'Occupied'},{id:'B-302',name:'Block B - 302',type:'2BR Premium',cap:4,price:160,status:'Available'},{id:'B-303',name:'Block B - 303',type:'1BR Apartment',cap:2,price:90,status:'Available'},{id:'C-205',name:'Block C - 205',type:'Studio',cap:2,price:65,status:'Cleaning'},{id:'C-206',name:'Block C - 206',type:'3BR House',cap:6,price:220,status:'Available'}];
+let cur=1,tot=7,selRoom=null,extra=[],files=[],currentRole='guest',currentUser={email:'',name:''};
+function switchLogin(t){document.getElementById('tabGuest').classList.toggle('active',t==='guest');document.getElementById('tabAdmin').classList.toggle('active',t==='admin');document.getElementById('guestLogin').classList.toggle('hidden',t!=='guest');document.getElementById('adminLogin').classList.toggle('hidden',t!=='admin');lucide.createIcons();}
+function loginGuest(){const email=document.getElementById('guestEmail').value.trim();const name=document.getElementById('guestName').value.trim();if(!email||!email.includes('@')){alert('Enter valid email');return;}currentRole='guest';currentUser={email,name:name||email.split('@')[0]};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.remove('hidden');document.getElementById('navAdmin').classList.add('hidden');document.getElementById('userLabel').textContent=currentUser.name;document.getElementById('roleLabel').textContent='Guest • '+email;document.getElementById('guestWelcome').textContent=currentUser.name;document.getElementById('guestEmailLabel').textContent=email;document.getElementById('em').value=email;document.getElementById('fn').value=name.split(' ')[0]||'';document.getElementById('ln').value=name.split(' ').slice(1).join(' ')||'';document.getElementById('modePill').textContent='Guest Access';go('guest-home');init();}
+function loginAdmin(){const email=document.getElementById('adminEmail').value.trim();const pass=document.getElementById('adminPass').value;if(email!=='admin@riverdale.com'||pass!=='admin123'){alert('Invalid admin credentials');return;}currentRole='admin';currentUser={email,name:'Admin'};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.add('hidden');document.getElementById('navAdmin').classList.remove('hidden');document.getElementById('userLabel').textContent='Riverdale Admin';document.getElementById('roleLabel').textContent='Admin • Full Access';document.getElementById('modePill').textContent='Admin Access';go('dash');init();}
+function logout(){document.getElementById('appScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');cur=1;selRoom=null;extra=[];files=[];closeSidebar();}
+function closeSidebar(){document.getElementById('sb').classList.remove('open');document.getElementById('backdrop').classList.remove('show');}
+function init(){stepper();renderRooms();mini();dates();upload();genRef();lucide.createIcons();if(document.getElementById('menu')){document.getElementById('menu').onclick=()=>{document.getElementById('sb').classList.toggle('open');document.getElementById('backdrop').classList.toggle('show');}}}
+function go(p){const adminOnly=['dash','bookings','guests','verify','reports','settings'];if(currentRole==='guest'&&adminOnly.includes(p)){alert('Access denied: Admin dashboard not accessible to guests');return;}document.querySelectorAll('section[id^="p-"]').forEach(s=>s.classList.add('hidden'));const target=document.getElementById('p-'+p);if(target) target.classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.toggle('active',b.dataset.p===p||b.getAttribute('onclick')?.includes(`'${p}'`))});closeSidebar();lucide.createIcons();if(p==='checkin'){cur=1;stepper();} if(p==='guest-receipts'||p==='verify'){setTimeout(generateAllQRCodes,100);}}
+function stepper(){const el=document.getElementById('stepper');if(!el) return;const t=['Guest Info','ID Upload','Extra Guests','Dates','Room/House','Requests','Review'];el.innerHTML=t.map((x,i)=>`<div class="step ${i+1===cur?'active':''} ${i+1<cur?'done':''}">${i+1<cur?'✓':i+1}. ${x}</div>`).join('');for(let i=1;i<=tot;i++){const s=document.getElementById('s'+i);if(s) s.classList.toggle('hidden',i!==cur);}const pb=document.getElementById('prevB');if(pb) pb.style.visibility=cur===1?'hidden':'visible';const nb=document.getElementById('nextB');if(nb) nb.innerHTML=cur===tot?'Submit & Auto PDF+QR <i data-lucide="arrow-right" style="width:14px"></i>':'Next <i data-lucide="arrow-right" style="width:14px"></i>';lucide.createIcons();}
+function next(){if(cur===7){submit();return;}if(cur===1&&!document.getElementById('fn').value){alert('Fill first name');return;}if(cur===4)calcN();if(cur===6){buildReview();generateAllQRCodes();}cur=Math.min(tot,cur+1);stepper();}
+function prev(){cur=Math.max(1,cur-1);stepper();}
+function upload(){const inp=document.getElementById('idFile');if(!inp) return;inp.onchange=e=>{[...e.target.files].forEach(f=>{const url=URL.createObjectURL(f);files.push({name:f.name,url});const box=document.getElementById('prevBox');const d=document.createElement('div');d.className='prev';d.innerHTML=`<img src="${url}"><button class="x" onclick="this.parentElement.remove()">×</button>`;box.appendChild(d);})}}
+function addG(){extra.push({id:Date.now(),name:''});renderExtra();}
+function renderExtra(){const box=document.getElementById('extraBox');if(!box) return;box.innerHTML=extra.map(g=>`<div class="card" style="padding:12px;margin-bottom:10px;display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:end"><div><label class="lbl">Full Name</label><input class="inp" oninput="upd(${g.id},'name',this.value)"></div><div><label class="lbl">Type</label><select class="sel"><option>Adult</option><option>Child</option></select></div><button class="btn btn-g" onclick="rem(${g.id})"><i data-lucide="x" style="width:14px"></i></button></div>`).join('')||'No extra guests';calcG();lucide.createIcons();}
+function upd(id,k,v){const o=extra.find(x=>x.id===id);if(o)o[k]=v;}function rem(id){extra=extra.filter(x=>x.id!==id);renderExtra();}
+function calcG(){const total=1+extra.length;const tg=document.getElementById('totalG');if(tg) tg.textContent=total;const gl=document.getElementById('gLabel');if(gl) gl.textContent=total+' Guest'+(total>1?'s':'');const mg=document.getElementById('myGuests');if(mg) mg.textContent=total;}
+function dates(){const today=new Date().toISOString().split('T')[0];const tom=new Date(Date.now()+86400000).toISOString().split('T')[0];const ci=document.getElementById('ci');const co=document.getElementById('co');if(ci) ci.value=today;if(co) co.value=tom;if(ci) ci.addEventListener('change',calcN);if(co) co.addEventListener('change',calcN);calcN();}
+function calcN(){const ci=document.getElementById('ci');const co=document.getElementById('co');if(!ci||!co) return 0;const a=new Date(ci.value),b=new Date(co.value);if(isNaN(a)||isNaN(b)) return 0;const d=Math.round((b-a)/86400000);const n=d>0?d:0;const nc=document.getElementById('nCount');if(nc) nc.textContent=n+' night(s) - Auto';const mn=document.getElementById('myNights');if(mn) mn.textContent=n;return n;}
+function renderRooms(){const g=document.getElementById('roomGrid');const pg=document.getElementById('roomsPage');const html=rooms.map(r=>`<div class="room ${selRoom===r.id?'sel':''}" onclick="pick('${r.id}')"><div style="display:flex;justify-content:space-between"><b>${r.name}</b><span class="badge ${r.status==='Available'?'bg-green':'bg-orange'}">${r.status}</span></div><div style="font-size:12px;color:var(--slate)">${r.type} • Max ${r.cap}</div><div style="font-weight:800">$${r.price}/night</div></div>`).join('');if(g) g.innerHTML=html;if(pg) pg.innerHTML=html;}
+function mini(){const el=document.getElementById('mini');if(!el) return;el.innerHTML=rooms.map(r=>`<div style="padding:8px;border-radius:10px;text-align:center;background:${r.status==='Available'?'#ECFDF5':'#F9FAFB'};border:1px solid var(--line);font-size:11px;font-weight:700">${r.id}</div>`).join('');}
+function pick(id){selRoom=id;renderRooms();const mr=document.getElementById('myRoom');if(mr) mr.textContent=rooms.find(r=>r.id===id)?.name||id;}
+function genRef(){const s='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';let r='RD-';for(let i=0;i<6;i++)r+=s[Math.floor(Math.random()*s.length)];const el=document.getElementById('ref');if(el) el.textContent=r;const rr=document.getElementById('receiptRef');if(rr) rr.textContent=r;const myr=document.getElementById('myRef');if(myr) myr.textContent=r;return r;}
+function buildReview(){const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);const rev=document.getElementById('review');if(!rev) return;rev.innerHTML=`<div class="kv"><span>Guest</span><span>${document.getElementById('fn').value} ${document.getElementById('ln').value}</span></div><div class="kv"><span>Email</span><span>${document.getElementById('em').value}</span></div><div class="kv"><span>Total Guests Auto</span><span>${total}=1+${extra.length}</span></div><div class="kv"><span>Nights Auto</span><span>${nights}</span></div><div class="kv"><span>Room</span><span>${selRoom||'N/A'} $${roomObj?roomObj.price:0}/night • Total $${roomObj?roomObj.price*nights:0}</span></div><div class="kv"><span>ID</span><span>${document.getElementById('idType').value} - ${document.getElementById('idNum').value}</span></div>`;}
+function getQRData(){
+ const ref=document.getElementById('ref')?.textContent||'RD-XXXXXX';
+ const nights=calcN();const total=1+extra.length;
+ const roomObj=rooms.find(r=>r.id===selRoom);
+ const data=`RIVERDALE|${ref}|${document.getElementById('fn').value} ${document.getElementById('ln').value}|${document.getElementById('em').value}|${selRoom||'N/A'}|${nights} nights|${total} guests|${new Date().toISOString().split('T')[0]}|${roomObj?roomObj.name:''}`;
+ return data;
+}
+function generateQRCode(containerId){
+ const container=document.getElementById(containerId);
+ if(!container) return;
+ container.innerHTML='';
+ const data=getQRData();
+ new QRCode(container,{text:data,width:140,height:140,colorDark:'#111827',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+ const txt=document.getElementById('qrText'); if(txt) txt.textContent=data.substring(0,60)+'...';
+}
+function generateAllQRCodes(){
+ generateQRCode('qrCode');
+ generateQRCode('qrReceipt');
+ generateQRCode('qrVerify');
+}
+function downloadQR(){
+ const container=document.getElementById('qrCode')||document.getElementById('qrReceipt');
+ if(!container) return;
+ const img=container.querySelector('img')||container.querySelector('canvas');
+ if(!img){alert('Generate QR first');return;}
+ let dataUrl;
+ if(img.tagName==='CANVAS'){dataUrl=img.toDataURL('image/png');}
+ else{dataUrl=img.src;}
+ const a=document.createElement('a');a.href=dataUrl;a.download=(document.getElementById('ref')?.textContent||'RD')+'-QR.png';a.click();
+}
+function verifyQR(){
+ const input=document.getElementById('qrInput').value.trim();
+ const result=document.getElementById('qrVerifyResult');
+ if(!input){result.innerHTML='<span style="color:#DC2626;font-size:12px">Paste QR content</span>';return;}
+ if(input.includes('RIVERDALE')&&input.includes('RD-')){
+   const parts=input.split('|');
+   result.innerHTML=`<div style="background:#ECFDF5;border:1px solid #A7F3D0;padding:12px;border-radius:10px;font-size:13px"><b style="color:#065F46">✅ Valid Riverdale QR</b><br><br>${parts.map(p=>`<div><b>${p}</b></div>`).join('')}<br><span class="badge bg-green">Verified at Reception</span></div>`;
+ } else {
+   result.innerHTML='<div style="background:#FEF2F2;border:1px solid #FECACA;padding:12px;border-radius:10px;font-size:13px;color:#991B1B">❌ Invalid QR — not a Riverdale booking</div>';
+ }
+}
+function generatePDF(includeQR){
+ const {jsPDF}=window.jspdf;const doc=new jsPDF();
+ const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);
+ const ref=document.getElementById('ref')?.textContent||'RD-XXXXXX';
+ doc.setFillColor(17,24,39);doc.rect(0,0,210,36,'F');
+ doc.setTextColor(255,255,255);doc.setFontSize(16);doc.setFont('helvetica','bold');doc.text('Riverdale Apartment',14,18);
+ doc.setFontSize(9);doc.setFont('helvetica','normal');doc.text('QR Verified Receipt • Professional Edition',14,26);
+ doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text('Ref: '+ref,150,18);
+ doc.setTextColor(17,24,39);doc.setFontSize(11);doc.setFont('helvetica','normal');
+ let y=48;
+ const lines=[
+  `Guest: ${document.getElementById('fn').value} ${document.getElementById('ln').value} | Email: ${document.getElementById('em').value}`,
+  `Total Guests (Auto): ${total} = 1 + ${extra.length} | Nights (Auto): ${nights}`,
+  `Room: ${selRoom||'N/A'} ${roomObj?roomObj.name:''} | $${roomObj?roomObj.price:0}/night | Total: $${roomObj?roomObj.price*nights:0}`,
+  `Check-In: ${document.getElementById('ci').value} | Check-Out: ${document.getElementById('co').value}`,
+  `ID: ${document.getElementById('idType').value} - ${document.getElementById('idNum').value}`,
+  `Emergency: ${document.getElementById('en').value} - ${document.getElementById('ep').value}`,
+  `Requests: ${document.getElementById('req').value||'None'}`,
+  `Ref: ${ref} | Role: ${currentRole} | ${new Date().toLocaleString()}`,
+  ``,
+  `QR Verification Data:`,
+  `${getQRData()}`,
+  ``,
+  `Show QR at reception for verification. Scan with any phone camera.`
+ ];
+ lines.forEach(l=>{doc.text(l,14,y);y+=6;if(y>270){doc.addPage();y=20;}});
+ try{
+  const qrContainer=document.getElementById('qrCode')||document.getElementById('qrReceipt');
+  const canvas=qrContainer?.querySelector('canvas');
+  if(canvas && includeQR){
+   const dataUrl=canvas.toDataURL('image/png');
+   doc.addImage(dataUrl,'PNG',150,60,45,45);
+  }
+ }catch(e){}
+ doc.setFontSize(8);doc.setTextColor(107,114,128);doc.text('Riverdale Apartment • QR Verified • Blue/White • No Backend',14,285);
+ doc.save(ref+'-Riverdale-QR-Receipt.pdf');
+}
+function submit(){if(!document.getElementById('agree').checked){alert('Agree to rules');return;}if(!selRoom){alert('Select room');cur=5;stepper();return;}buildReview();generateAllQRCodes();setTimeout(()=>generatePDF(true),300);alert('✅ Submitted! QR + PDF Auto Generated! Ref: '+document.getElementById('ref').textContent+' — Show QR at reception');if(currentRole==='guest'){go('guest-receipts');}else{go('bookings');}cur=1;genRef();stepper();}
+setInterval(()=>{const el=document.getElementById('clk');if(el)el.textContent=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});},1000);
+lucide.createIcons();
+</script>
+</body>
+</html>
