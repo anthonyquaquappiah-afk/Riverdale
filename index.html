@@ -87,7 +87,21 @@
 }
 
 /* Safe area for iPhone */
-body{padding-bottom: env(safe-area-inset-bottom)}
+body{padding-bottom: env(safe-area-inset-bottom)
+      /* --- FIX OVERFLOW + SMALLER TEXT FOR DASHBOARD --- */
+  h1{font-size:20px!important; line-height:1.25!important; word-break:break-word}
+  #p-dash h1{font-size:20px!important; white-space:normal!important; overflow-wrap:anywhere}
+  #p-dash > p{font-size:11px!important; line-height:1.4}
+  #p-dash div[style*="repeat(4,1fr)"]{
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+  }
+  #p-dash .kpi{padding:12px!important}
+  #p-dash .kpi h3{font-size:13px!important}
+  #p-dash .kpi .val{font-size:20px!important; font-weight:800}
+  #p-dash .card{padding:12px!important}
+  .topbar span{font-size:12px!important}
+  .badge{font-size:10px!important; padding:4px 8px!important}}
 </style>
 </head>
 <body>
