@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover">
-<title>Riverdale Apartment - Blue Edition</title>
+<title>Riverdale Apartment</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -116,14 +116,14 @@ h1{font-size:22px!important}
 
 <div id="loginScreen" class="login-wrap">
 <div class="login-card">
-<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><div class="brand-mark"><i data-lucide="building-2" style="width:20px;height:20px"></i></div><div><div style="font-weight:800;font-family:Manrope">Riverdale Apartment</div><div style="font-size:11px;color:var(--blue);font-weight:700">BLUE EDITION • QR VERIFIED</div></div></div>
-<h2 style="font-size:22px;margin-bottom:6px">Sign in</h2><p style="font-size:13px;color:var(--slate);margin-bottom:16px">Guests use Gmail only. Quick sign-in, no OTP.</p>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:18px"><div class="brand-mark"><i data-lucide="building-2" style="width:20px;height:20px"></i></div><div><div style="font-weight:800;font-family:Manrope">Riverdale Apartment</div><div style="font-size:11px;color:var(--blue);font-weight:700">SHORT STAYS,LONG MEMORIES</div></div></div>
+<h2 style="font-size:22px;margin-bottom:6px">Sign in</h2><p style="font-size:13px;color:var(--slate);margin-bottom:16px">Kindly Sign in with your Gmail</p>
 <div class="login-tabs"><button class="login-tab active" id="tabGuest" onclick="switchLogin('guest')">Guest Access</button><button class="login-tab" id="tabAdmin" onclick="switchLogin('admin')">Admin Access</button></div>
 <div id="guestLogin">
 <div><label class="lbl">Gmail address *</label><input class="inp" id="guestEmail" placeholder="yourname@gmail.com" type="email" required onblur="checkGmail(this.value)"><div class="err" id="e-guestEmail">Valid Gmail required</div><div id="gmailStatus"></div></div>
 <div style="margin-top:12px"><label class="lbl">Full Name *</label><input class="inp" id="guestName" placeholder="Emma Carter" required><div class="err" id="e-guestName">Full name required</div></div>
-<div style="margin-top:16px"><button class="btn btn-p" style="width:100%" onclick="loginGuest()">Continue — Quick Sign In</button></div>
-<p style="font-size:11px;color:var(--slate);margin-top:10px;text-align:center">✓ Blue theme • ✓ Mobile optimized • ✓ Instant</p>
+<div style="margin-top:16px"><button class="btn btn-p" style="width:100%" onclick="loginGuest()"> Sign In</button></div>
+<p style="font-size:11px;color:var(--slate);margin-top:10px;text-align:center">• Rverdale Apartment KSI.• </p>
 </div>
 <div id="adminLogin" class="hidden">
 <div><label class="lbl">Admin Email *</label><input class="inp" id="adminEmail" value="admin@riverdale.com" required></div>
@@ -135,7 +135,7 @@ h1{font-size:22px!important}
 
 <div id="appScreen" class="app hidden">
 <aside class="sidebar" id="sb">
-<div class="brand"><div class="brand-mark"><i data-lucide="building-2" style="width:20px;height:20px"></i></div><div><div style="font-weight:800">Riverdale</div><div style="font-size:10px;color:var(--blue);font-weight:700">BLUE EDITION</div></div></div>
+<div class="brand"><div class="brand-mark"><i data-lucide="building-2" style="width:20px;height:20px"></i></div><div><div style="font-weight:800">Riverdale</div><div style="font-size:10px;color:var(--blue);font-weight:700">Short Stays,Long Memories</div></div></div>
 <nav class="nav">
 <div id="navGuest">
 <div class="nav-sec">Guest Portal</div>
@@ -176,11 +176,11 @@ h1{font-size:22px!important}
 <div class="content">
 <section id="p-guest-home">
 <div class="hero-bg"><div class="hero-content">
-<h1 style="font-size:28px">Welcome, <span id="guestWelcome">Guest</span> 👋</h1><p style="margin:8px 0 16px;font-size:13.5px">Luxury stay in Accra — Blue Edition, fully mobile.</p>
+<h1 style="font-size:28px">Welcome, <span id="guestWelcome">Guest</span> 👋</h1><p style="margin:8px 0 16px;font-size:13.5px">Luxury stay in Kumasi.</p>
 <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" style="background:white;color:var(--blue)" onclick="go('checkin')">Complete Check-In</button><button class="btn btn-g" style="background:rgba(255,255,255,.2);color:white;border-color:rgba(255,255,255,.4)" onclick="openChat()">Chat Host</button></div>
 </div></div>
 <div class="grid2">
-<div class="card"><div style="display:flex;justify-content:space-between;gap:8px"><h3>My Current Stay</h3><span class="badge bg-blue">Blue • QR</span></div><div style="margin-top:12px;font-size:13px;color:var(--slate)">Signed in as <b id="guestEmailLabel"></b></div><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" onclick="go('checkin')">Check-In</button><button class="btn btn-g" onclick="go('guest-receipts')">Show QR</button></div></div>
+<div class="card"><div style="display:flex;justify-content:space-between;gap:8px"><h3>My Current Stay</h3><</div><div style="margin-top:12px;font-size:13px;color:var(--slate)">Signed in as <b id="guestEmailLabel"></b></div><div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-p" onclick="go('checkin')">Check-In</button><button class="btn btn-g" onclick="go('guest-receipts')">Show QR</button></div></div>
 <div class="card"><h3>Features — Blue</h3><div style="font-size:13px;color:var(--slate);margin-top:8px;line-height:1.7">• Auto Invoice PDF (blue header)<br>• Gmail check (no OTP)<br>• QR for reception<br>• Review prompt after checkout<br>• Chat + WhatsApp<br>• Bulk Email/SMS</div></div>
 </div>
 <div class="card" style="margin-top:16px"><h3>Recent Reviews</h3><div id="homeReviews" style="margin-top:10px"></div></div>
