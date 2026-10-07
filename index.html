@@ -167,13 +167,7 @@ body{padding-bottom: env(safe-area-inset-bottom)
 
 <script>
 const rooms=[{id:'One Bedroom',name:'Luna',type:'1BR',cap:2,price:120,status:'Available'},{id:'B-302',name:'Block B - 302',type:'2BR Premium',cap:4,price:160,status:'Available'},{id:'B-303',name:'Block B - 303',type:'1BR',cap:2,price:90,status:'Available'},{id:'C-206',name:'Block C - 206',type:'3BR House',cap:6,price:220,status:'Available'}];
-// Load saved statuses
-if(localStorage.getItem('rd_rooms')){
-  roomsStore = JSON.parse(localStorage.getItem('rd_rooms'));
-} else {
-  roomsStore = rooms;
-}
-  let cur=1,tot=7,selRoom=null,extra=[],files=[],currentRole='guest',currentUser={email:'',name:''},currentRating=0,chats=[],reviews=[];
+let cur=1,tot=7,selRoom=null,extra=[],files=[],currentRole='guest',currentUser={email:'',name:''},currentRating=0,chats=[],reviews=[];
 function switchLogin(t){document.getElementById('tabGuest').classList.toggle('active',t==='guest');document.getElementById('tabAdmin').classList.toggle('active',t==='admin');document.getElementById('guestLogin').classList.toggle('hidden',t!=='guest');document.getElementById('adminLogin').classList.toggle('hidden',t!=='admin');}
 function loginGuest(){const email=document.getElementById('guestEmail').value.trim();const name=document.getElementById('guestName').value.trim();if(!email||!name){alert('Fill');return}currentRole='guest';currentUser={email,name};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.remove('hidden');document.getElementById('navAdmin').classList.add('hidden');document.getElementById('userLabel').textContent=name;document.getElementById('guestWelcome').textContent=name;document.getElementById('guestEmailLabel').textContent=email;document.getElementById('em').value=email;document.getElementById('fn').value=name.split(' ')[0]||'';document.getElementById('ln').value=name.split(' ').slice(1).join(' ')||'';go('guest-home');init();}
 function loginAdmin(){currentRole='admin';currentUser={email:'admin',name:'Admin'};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.add('hidden');document.getElementById('navAdmin').classList.remove('hidden');document.getElementById('userLabel').textContent='Admin';go('dash');init();}
