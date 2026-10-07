@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Riverdale Apartment Kumasi</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,6 +40,54 @@
 .stars{display:flex;gap:6px;font-size:30px;cursor:pointer;margin:12px 0}.star{color:#E5E7EB}.star.active{color:#F59E0B}.verified{color:#065F46;background:#ECFDF5;border:1px solid #A7F3D0;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;display:inline-flex;gap:4px;align-items:center;margin-top:6px}
 @media(max-width:1024px){.sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.3s;width:85%;max-width:320px;z-index:50}.sidebar.open{transform:translateX(0)}.mob{display:grid;place-items:center}}
 @media(max-width:768px){.content{padding:14px}.form-grid{grid-template-columns:1fr}#modePill{display:none!important}}
+
+@media(max-width:768px){
+  .topbar{
+    height:58px;
+    padding:0 12px;
+    gap:8px;
+  }
+  .topbar span{font-size:13px; white-space:nowrap}
+  #modePill{display:none!important}
+  .content{padding:12px}
+  .hero-bg{
+    border-radius:24px;
+    padding:20px;
+    margin-bottom:14px;
+    min-height:240px;
+    display:flex;
+    align-items:center;
+  }
+  .hero-content h1{font-size:28px!important; line-height:1.1}
+  .hero-content p{font-size:14px}
+  .hero-content .btn{height:44px}
+  .card{border-radius:20px; padding:16px; margin-bottom:12px}
+  .form-grid{grid-template-columns:1fr!important}
+  .stepper{
+    gap:6px;
+    padding-bottom:4px;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .stepper::-webkit-scrollbar{display:none}
+  .step{font-size:11px; padding:8px 12px}
+  .tbl{font-size:12px}
+  .btn{height:44px; font-size:14px}
+  .chat-float{
+    bottom: calc(14px + env(safe-area-inset-bottom));
+    right:12px;
+  }
+  .sidebar{
+    width:82%;
+    max-width:320px;
+    border-radius:0 20px 20px 0;
+    box-shadow:20px 0 60px rgba(0,0,0,.2);
+  }
+  .login-card{border-radius:24px; padding:22px}
+}
+
+/* Safe area for iPhone */
+body{padding-bottom: env(safe-area-inset-bottom)}
 </style>
 </head>
 <body>
