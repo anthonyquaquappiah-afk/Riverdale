@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Riverdale Apartment Kumasi</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lucide@latest"></script>
@@ -40,67 +40,6 @@
 .stars{display:flex;gap:6px;font-size:30px;cursor:pointer;margin:12px 0}.star{color:#E5E7EB}.star.active{color:#F59E0B}.verified{color:#065F46;background:#ECFDF5;border:1px solid #A7F3D0;padding:6px 10px;border-radius:8px;font-size:11px;font-weight:700;display:inline-flex;gap:4px;align-items:center;margin-top:6px}
 @media(max-width:1024px){.sidebar{position:fixed;left:0;top:0;transform:translateX(-100%);transition:.3s;width:85%;max-width:320px;z-index:50}.sidebar.open{transform:translateX(0)}.mob{display:grid;place-items:center}}
 @media(max-width:768px){.content{padding:14px}.form-grid{grid-template-columns:1fr}#modePill{display:none!important}}
-@media(max-width:768px){
-  .topbar{
-    height:58px;
-    padding:0 12px;
-    gap:8px;
-  }
-  .topbar span{font-size:13px; white-space:nowrap}
-  #modePill{display:none!important}
-  .content{padding:12px}
-  .hero-bg{
-    border-radius:24px;
-    padding:20px;
-    margin-bottom:14px;
-    min-height:240px;
-    display:flex;
-    align-items:center;
-  }
-  .hero-content h1{font-size:28px!important; line-height:1.1}
-  .hero-content p{font-size:14px}
-  .hero-content .btn{height:44px}
-  .card{border-radius:20px; padding:16px; margin-bottom:12px}
-  .form-grid{grid-template-columns:1fr!important}
-  .stepper{
-    gap:6px;
-    padding-bottom:4px;
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;
-  }
-  .stepper::-webkit-scrollbar{display:none}
-  .step{font-size:11px; padding:8px 12px}
-  .tbl{font-size:12px}
-  .btn{height:44px; font-size:14px}
-  .chat-float{
-    bottom: calc(14px + env(safe-area-inset-bottom));
-    right:12px;
-  }
-  .sidebar{
-    width:82%;
-    max-width:320px;
-    border-radius:0 20px 20px 0;
-    box-shadow:20px 0 60px rgba(0,0,0,.2);
-  }
-  .login-card{border-radius:24px; padding:22px}
-}
-
-/* Safe area for iPhone */
-body{padding-bottom: env(safe-area-inset-bottom)
-      /* --- FIX OVERFLOW + SMALLER TEXT FOR DASHBOARD --- */
-  h1{font-size:20px!important; line-height:1.25!important; word-break:break-word}
-  #p-dash h1{font-size:20px!important; white-space:normal!important; overflow-wrap:anywhere}
-  #p-dash > p{font-size:11px!important; line-height:1.4}
-  #p-dash div[style*="repeat(4,1fr)"]{
-    grid-template-columns:1fr 1fr!important;
-    gap:10px!important;
-  }
-  #p-dash .kpi{padding:12px!important}
-  #p-dash .kpi h3{font-size:13px!important}
-  #p-dash .kpi .val{font-size:20px!important; font-weight:800}
-  #p-dash .card{padding:12px!important}
-  .topbar span{font-size:12px!important}
-  .badge{font-size:10px!important; padding:4px 8px!important}}
 </style>
 </head>
 <body>
@@ -162,18 +101,19 @@ body{padding-bottom: env(safe-area-inset-bottom)
 
 <div id="checkinDetailModal" class="modal"><div class="modal-card"><div style="display:flex;justify-content:space-between"><h3 id="detailTitle">Details</h3><button class="btn btn-g" onclick="closeDetailModal()">✕</button></div><div id="detailContent" style="margin-top:12px"></div><div id="detailDocs" style="margin-top:16px"></div><div style="display:flex;gap:10px;margin-top:18px"><button class="btn btn-g" style="flex:1" onclick="closeDetailModal()">Close</button><button class="btn btn-p" style="flex:1" onclick="downloadDetailInvoice()">Download Invoice</button></div></div></div>
 
-<div class="chat-float"><div class="chat-box hidden" id="chatBox"><div class="chat-head"><span>Chat</span><button style="background:transparent;border:none;color:white" onclick="closeChat()">✕</button></div><div class="chat-msgs" id="chatMsgs"><div class="msg host">Welcome to Riverdale Kumasi!</div></div><div class="chat-input"><input class="inp" id="chatInput" placeholder="Type..."><button class="btn btn-p" onclick="sendChat()">Send</button></div></div><button class="chat-btn host" onclick="toggleChat()"><i data-lucide="message-circle" style="width:22px"></i></button><a class="chat-btn wa" href="https://wa.me/233000000000" target="_blank"><i data-lucide="phone" style="width:22px"></i></a></div>
+<div class="chat-float" style="display:none" id="chatFloat"><div class="chat-box hidden" id="chatBox"><div class="chat-head"><span>Chat</span><button style="background:transparent;border:none;color:white" onclick="closeChat()">✕</button></div><div class="chat-msgs" id="chatMsgs"><div class="msg host">Welcome to Riverdale Kumasi!</div></div><div class="chat-input"><input class="inp" id="chatInput" placeholder="Type..."><button class="btn btn-p" onclick="sendChat()">Send</button></div></div><button class="chat-btn host" onclick="toggleChat()"><i data-lucide="message-circle" style="width:22px"></i></button><a class="chat-btn wa" href="https://wa.me/233000000000" target="_blank"><i data-lucide="phone" style="width:22px"></i></a></div>
 
 <script>
 const rooms=[{id:'A-101',name:'Block A - 101',type:'1BR',cap:2,price:85},{id:'B-302',name:'Block B - 302',type:'2BR Premium',cap:4,price:160},{id:'B-303',name:'Block B - 303',type:'1BR',cap:2,price:90},{id:'C-206',name:'Block C - 206',type:'3BR House',cap:6,price:220}];
+let cur=1,tot=7,selRoom=null,extra=[],files=[],currentRole='guest',currentUser={email:'',name:''},currentRating=0,chats=[],reviews=[];
 function switchLogin(t){document.getElementById('tabGuest').classList.toggle('active',t==='guest');document.getElementById('tabAdmin').classList.toggle('active',t==='admin');document.getElementById('guestLogin').classList.toggle('hidden',t!=='guest');document.getElementById('adminLogin').classList.toggle('hidden',t!=='admin');}
-function loginGuest(){const email=document.getElementById('guestEmail').value.trim();const name=document.getElementById('guestName').value.trim();if(!email||!name){alert('Fill');return}currentRole='guest';currentUser={email,name};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.remove('hidden');document.getElementById('navAdmin').classList.add('hidden');document.getElementById('userLabel').textContent=name;document.getElementById('guestWelcome').textContent=name;document.getElementById('guestEmailLabel').textContent=email;document.getElementById('em').value=email;document.getElementById('fn').value=name.split(' ')[0]||'';document.getElementById('ln').value=name.split(' ').slice(1).join(' ')||'';go('guest-home');init();}
-function loginAdmin(){currentRole='admin';currentUser={email:'admin',name:'Admin'};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.add('hidden');document.getElementById('navAdmin').classList.remove('hidden');document.getElementById('userLabel').textContent='Admin';go('dash');init();}
-function logout(){document.getElementById('appScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');cur=1;selRoom=null;extra=[];files=[];closeSidebar();}
+function loginGuest(){const email=document.getElementById('guestEmail').value.trim();const name=document.getElementById('guestName').value.trim();if(!email||!name){alert('Fill');return}currentRole='guest';currentUser={email,name};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.remove('hidden');document.getElementById('navAdmin').classList.add('hidden');document.getElementById('userLabel').textContent=name;document.getElementById('guestWelcome').textContent=name;document.getElementById('guestEmailLabel').textContent=email;document.getElementById('em').value=email;document.getElementById('fn').value=name.split(' ')[0]||'';document.getElementById('ln').value=name.split(' ').slice(1).join(' ')||'';document.getElementById('chatFloat').style.display='flex';go('guest-home');init();}
+function loginAdmin(){const em=document.getElementById('adminEmail').value.trim();const pw=document.getElementById('adminPass').value.trim();if(em!=='admin@riverdale.com'||pw!=='admin123'){alert('Wrong admin credentials');return}currentRole='admin';currentUser={email:'admin',name:'Admin'};document.getElementById('loginScreen').classList.add('hidden');document.getElementById('appScreen').classList.remove('hidden');document.getElementById('navGuest').classList.add('hidden');document.getElementById('navAdmin').classList.remove('hidden');document.getElementById('userLabel').textContent='Admin';document.getElementById('chatFloat').style.display='flex';go('dash');init();}
+function logout(){document.getElementById('appScreen').classList.add('hidden');document.getElementById('loginScreen').classList.remove('hidden');document.getElementById('chatFloat').style.display='none';cur=1;selRoom=null;extra=[];files=[];closeSidebar();}
 function toggleMenu(){document.getElementById('sb').classList.toggle('open');document.getElementById('backdrop').classList.toggle('show')}
 function closeSidebar(){document.getElementById('sb').classList.remove('open');document.getElementById('backdrop').classList.remove('show');}
-function init(){stepper();renderRooms();dates();upload();genRef();loadReviews();loadChats();loadCheckins();lucide.createIcons();const m=document.getElementById('menu');if(m)m.onclick=()=>{document.getElementById('sb').classList.toggle('open');document.getElementById('backdrop').classList.toggle('show');}}
-function go(p){document.querySelectorAll('section[id^="p-"]').forEach(s=>s.classList.add('hidden'));const t=document.getElementById('p-'+p);if(t) t.classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.toggle('active',b.dataset.p===p)});closeSidebar();lucide.createIcons();if(p==='checkin'){cur=1;stepper()} if(p==='guest-receipts'||p==='verify'){setTimeout(generateAllQRCodes,100)} if(p==='dash'||p==='guests'||p==='bookings'){setTimeout(loadCheckins,100)}}
+function init(){stepper();renderRooms();dates();upload();genRef();loadReviews();loadChats();loadCheckins();lucide.createIcons();}
+function go(p){document.querySelectorAll('section[id^="p-"]').forEach(s=>s.classList.add('hidden'));const t=document.getElementById('p-'+p);if(t) t.classList.remove('hidden');document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.toggle('active',b.dataset.p===p)});closeSidebar();lucide.createIcons();if(p==='checkin'){cur=1;stepper()} if(p==='guest-receipts'||p==='verify'){setTimeout(generateAllQRCodes,100)} if(p==='dash'||p==='guests'||p==='bookings'){setTimeout(loadCheckins,100)} if(p==='rooms'){setTimeout(renderRooms,50)}}
 function stepper(){const el=document.getElementById('stepper');if(!el) return;const t=['Guest','ID','Extra','Dates','Room','Rules','Review'];el.innerHTML=t.map((x,i)=>`<div class="step ${i+1===cur?'active':''} ${i+1<cur?'done':''}">${i+1<cur?'✓':i+1}. ${x}</div>`).join('');for(let i=1;i<=tot;i++){const s=document.getElementById('s'+i);if(s) s.classList.toggle('hidden',i!==cur)}document.getElementById('prevB').style.visibility=cur===1?'hidden':'visible';document.getElementById('nextB').innerHTML=cur===tot?'Submit & Save to Admin':'Next';}
 function next(){if(cur===1){if(!document.getElementById('fn').value||!document.getElementById('ln').value||!document.getElementById('em').value||!document.getElementById('ph').value){alert('Fill guest info');return}}if(cur===2){if(!document.getElementById('idType').value||!document.getElementById('idNum').value){alert('Fill ID');return}}if(cur===4){const a=new Date(document.getElementById('ci').value);const b=new Date(document.getElementById('co').value);if(!(b>a)){alert('Check-out must be after check-in');return}calcN()}if(cur===5){if(!selRoom){alert('Select room');return}}if(cur===6){if(!document.getElementById('agree').checked||!document.getElementById('agreeRules').checked){alert('Agree to rules');return}buildReview();generateAllQRCodes()}if(cur===7){submit();return}cur=Math.min(tot,cur+1);stepper()}
 function prev(){cur=Math.max(1,cur-1);stepper()}
@@ -182,29 +122,24 @@ function addG(){extra.push({id:Date.now(),name:''});renderExtra()}
 function renderExtra(){const box=document.getElementById('extraBox');box.innerHTML=extra.map(g=>`<div class="card" style="padding:12px;display:grid;grid-template-columns:1fr 1fr auto;gap:10px"><div><label class="lbl">Full Name</label><input class="inp" oninput="upd(${g.id},'name',this.value)"></div><div><label class="lbl">Type</label><select class="sel"><option>Adult</option><option>Child</option></select></div><button class="btn btn-g" onclick="rem(${g.id})">X</button></div>`).join('')||'No extra guests';calcG()}
 function upd(id,k,v){const o=extra.find(x=>x.id===id);if(o)o[k]=v}function rem(id){extra=extra.filter(x=>x.id!==id);renderExtra()}
 function calcG(){const total=1+extra.length;document.getElementById('totalG').textContent=total;document.getElementById('gLabel').textContent=total+' Guest'+(total>1?'s':'');const mg=document.getElementById('myGuests');if(mg) mg.textContent=total;return total}
-function dates(){const today=new Date().toISOString().split('T')[0];const tom=new Date(Date.now()+86400000).toISOString().split('T')[0];document.getElementById('ci').value=today;document.getElementById('co').value=tom;document.getElementById('ci').addEventListener('change',calcN);document.getElementById('co').addEventListener('change',calcN);calcN()}
-function calcN(){const a=new Date(document.getElementById('ci').value),b=new Date(document.getElementById('co').value);if(isNaN(a)||isNaN(b)) return 0;const d=Math.round((b-a)/86400000);const n=d>0?d:0;document.getElementById('nCount').textContent=n+' night(s)';const mn=document.getElementById('myNights');if(mn) mn.textContent=n;return n}
+function dates(){const today=new Date().toISOString().split('T')[0];const tom=new Date(Date.now()+86400000).toISOString().split('T')[0];const ci=document.getElementById('ci');const co=document.getElementById('co');if(ci&&!ci.value) ci.value=today;if(co&&!co.value) co.value=tom;if(ci) ci.addEventListener('change',calcN);if(co) co.addEventListener('change',calcN);calcN()}
+function calcN(){const a=new Date(document.getElementById('ci').value),b=new Date(document.getElementById('co').value);if(isNaN(a)||isNaN(b)) return 0;const d=Math.round((b-a)/86400000);const n=d>0?d:0;const el=document.getElementById('nCount');if(el) el.textContent=n+' night(s)';const mn=document.getElementById('myNights');if(mn) mn.textContent=n;return n}
 function renderRooms(){
   const g=document.getElementById('roomGrid');
   const pg=document.getElementById('roomsPage');
-  const html=rooms.map(r=>`
-    <div class="room ${selRoom===r.id?'sel':''}" onclick="pick('${r.id}')">
-      <div style="display:flex;justify-content:space-between;align-items:center"><b>${r.name}</b><span class="badge bg-blue">${r.id}</span></div>
-      <div style="font-size:12px;color:var(--slate);margin:6px 0">${r.type} • Max ${r.cap} guests</div>
-      <div style="font-weight:800;color:var(--blue)">$${r.price}/night</div>
-    </div>
-  `).join('');
+  const html=rooms.map(r=>`<div class="room ${selRoom===r.id?'sel':''}" onclick="pick('${r.id}')"><div style="display:flex;justify-content:space-between;align-items:center"><b>${r.name}</b><span class="badge bg-blue">${r.id}</span></div><div style="font-size:12px;color:var(--slate);margin:6px 0">${r.type} • Max ${r.cap} guests</div><div style="font-weight:800;color:var(--blue)">$${r.price}/night</div></div>`).join('');
   if(g) g.innerHTML=html;
   if(pg) pg.innerHTML=html;
 }
-function genRef(){const s='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';let r='RD-';for(let i=0;i<6;i++)r+=s[Math.floor(Math.random()*s.length)];document.getElementById('ref').textContent=r;document.getElementById('receiptRef').textContent=r;document.getElementById('myRef').textContent=r;return r}
-function buildReview(){const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);document.getElementById('review').innerHTML=`<div class="kv"><span>Guest</span><span>${document.getElementById('fn').value} ${document.getElementById('ln').value}</span></div><div class="kv"><span>Email</span><span>${document.getElementById('em').value}</span></div><div class="kv"><span>Guests</span><span>${total}</span></div><div class="kv"><span>Nights</span><span>${nights}</span></div><div class="kv"><span>Room</span><span>${selRoom||'N/A'} $${roomObj?roomObj.price:0}/night • Total $${roomObj?roomObj.price*nights:0}</span></div><div class="kv"><span>Docs</span><span>${files.length} uploaded ✓</span></div>`}
+function pick(id){selRoom=id;renderRooms();const mr=document.getElementById('myRoom');if(mr) mr.textContent=rooms.find(r=>r.id===id)?.name||id}
+function genRef(){const s='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';let r='RD-';for(let i=0;i<6;i++)r+=s[Math.floor(Math.random()*s.length)];const el1=document.getElementById('ref');if(el1) el1.textContent=r;const el2=document.getElementById('receiptRef');if(el2) el2.textContent=r;const el3=document.getElementById('myRef');if(el3) el3.textContent=r;return r}
+function buildReview(){const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);const rv=document.getElementById('review');if(rv) rv.innerHTML=`<div class="kv"><span>Guest</span><span>${document.getElementById('fn').value} ${document.getElementById('ln').value}</span></div><div class="kv"><span>Email</span><span>${document.getElementById('em').value}</span></div><div class="kv"><span>Guests</span><span>${total}</span></div><div class="kv"><span>Nights</span><span>${nights}</span></div><div class="kv"><span>Room</span><span>${selRoom||'N/A'} $${roomObj?roomObj.price:0}/night • Total $${roomObj?roomObj.price*nights:0}</span></div><div class="kv"><span>Docs</span><span>${files.length} uploaded ✓</span></div>`}
 function getQRData(){const ref=document.getElementById('ref')?.textContent||'RD-XXXXXX';const nights=calcN();const total=1+extra.length;return `RIVERDALE|${ref}|${document.getElementById('fn').value} ${document.getElementById('ln').value}|${document.getElementById('em').value}|${selRoom||'N/A'}|${nights} nights|${total} guests|${new Date().toISOString().split('T')[0]}`}
 function generateQRCode(id){const c=document.getElementById(id);if(!c) return;c.innerHTML='';new QRCode(c,{text:getQRData(),width:140,height:140,colorDark:'#0E3CE1',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});}
 function generateAllQRCodes(){generateQRCode('qrCode');generateQRCode('qrReceipt');generateQRCode('qrVerify')}
 function downloadQR(){const container=document.getElementById('qrCode')||document.getElementById('qrReceipt');const img=container.querySelector('canvas');if(!img){alert('Generate QR');return}const a=document.createElement('a');a.href=img.toDataURL('image/png');a.download=(document.getElementById('ref')?.textContent||'RD')+'-QR.png';a.click();}
 function verifyQR(){const input=document.getElementById('qrInput').value.trim();const r=document.getElementById('qrVerifyResult');if(!input){r.innerHTML='Paste QR';return}if(input.includes('RIVERDALE')){r.innerHTML='<div style="background:#ECFDF5;padding:12px;border-radius:10px;color:#065F46">✅ Valid QR: '+input+'</div>'}else{r.innerHTML='<div style="background:#FEF2F2;padding:12px;color:#991B1B">❌ Invalid</div>'}}
-function generateInvoice(dl=true){const {jsPDF}=window.jspdf;const doc=new jsPDF();const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);const ref=document.getElementById('ref')?.textContent||'RD-XXX';const price=roomObj?roomObj.price:0;const subtotal=price*nights;const tax=Math.round(subtotal*0.12);const grand=subtotal+tax;doc.setFillColor(14,60,225);doc.rect(0,0,210,38,'F');doc.setTextColor(255,255,255);doc.setFontSize(18);doc.setFont('helvetica','bold');doc.text('RIVERDALE APARTMENT',14,16);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Kumasi, Ghana • QR Verified Invoice',14,24);doc.setFontSize(11);doc.text('INVOICE',160,16);doc.setFontSize(9);doc.text(ref,160,24);doc.setTextColor(17,24,39);let y=50;doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text('BILL TO:',14,y);y+=6;doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(`${document.getElementById('fn').value} ${document.getElementById('ln').value}`,14,y);y+=5;doc.text(`${document.getElementById('em').value} • ${document.getElementById('ph').value}`,14,y);y+=5;doc.text(`Check-In: ${document.getElementById('ci').value} → ${document.getElementById('co').value} (${nights} nights) • Guests: ${total}`,14,y);y+=12;doc.setFillColor(239,242,255);doc.rect(14,y-6,182,10,'F');doc.setFont('helvetica','bold');doc.text('Description',16,y);doc.text('Qty',110,y);doc.text('Price',130,y);doc.text('Total',170,y);y+=8;doc.setFont('helvetica','normal');doc.text(`${roomObj?roomObj.name:selRoom}`,16,y);doc.text(`${nights}`,110,y);doc.text(`$${price}`,130,y);doc.text(`$${subtotal}`,170,y);y+=10;doc.text('Tax 12%',16,y);doc.text(`$${tax}`,170,y);y+=10;doc.setFont('helvetica','bold');doc.text('Grand Total',16,y);doc.text(`$${grand}`,170,y);y+=14;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(`PAID • ${new Date().toLocaleString()}`,14,y);y+=6;doc.setFontSize(8);doc.text('QR: '+getQRData(),14,y);doc.text('Riverdale Apartment Kumasi — Thank you!',14,285);try{const qr=document.getElementById('qrCode')?.querySelector('canvas');if(qr) doc.addImage(qr.toDataURL('image/png'),'PNG',150,60,40,40)}catch(e){}const inv=JSON.parse(localStorage.getItem('rd_invoices')||'[]');inv.unshift({ref,guest:document.getElementById('fn').value+' '+document.getElementById('ln').value,total:grand,date:new Date().toISOString()});localStorage.setItem('rd_invoices',JSON.stringify(inv));document.getElementById('invoiceCount').textContent=inv.length;renderInvoices();if(dl) doc.save(ref+'-Invoice.pdf');}
+function generateInvoice(dl=true){const {jsPDF}=window.jspdf;const doc=new jsPDF();const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);const ref=document.getElementById('ref')?.textContent||'RD-XXX';const price=roomObj?roomObj.price:0;const subtotal=price*nights;const tax=Math.round(subtotal*0.12);const grand=subtotal+tax;doc.setFillColor(14,60,225);doc.rect(0,0,210,38,'F');doc.setTextColor(255,255,255);doc.setFontSize(18);doc.setFont('helvetica','bold');doc.text('RIVERDALE APARTMENT',14,16);doc.setFontSize(10);doc.setFont('helvetica','normal');doc.text('Kumasi, Ghana • QR Verified Invoice',14,24);doc.setFontSize(11);doc.text('INVOICE',160,16);doc.setFontSize(9);doc.text(ref,160,24);doc.setTextColor(17,24,39);let y=50;doc.setFontSize(11);doc.setFont('helvetica','bold');doc.text('BILL TO:',14,y);y+=6;doc.setFont('helvetica','normal');doc.setFontSize(10);doc.text(`${document.getElementById('fn').value} ${document.getElementById('ln').value}`,14,y);y+=5;doc.text(`${document.getElementById('em').value} • ${document.getElementById('ph').value}`,14,y);y+=5;doc.text(`Check-In: ${document.getElementById('ci').value} → ${document.getElementById('co').value} (${nights} nights) • Guests: ${total}`,14,y);y+=12;doc.setFillColor(239,242,255);doc.rect(14,y-6,182,10,'F');doc.setFont('helvetica','bold');doc.text('Description',16,y);doc.text('Qty',110,y);doc.text('Price',130,y);doc.text('Total',170,y);y+=8;doc.setFont('helvetica','normal');doc.text(`${roomObj?roomObj.name:selRoom}`,16,y);doc.text(`${nights}`,110,y);doc.text(`$${price}`,130,y);doc.text(`$${subtotal}`,170,y);y+=10;doc.text('Tax 12%',16,y);doc.text(`$${tax}`,170,y);y+=10;doc.setFont('helvetica','bold');doc.text('Grand Total',16,y);doc.text(`$${grand}`,170,y);y+=14;doc.setFont('helvetica','normal');doc.setFontSize(9);doc.text(`PAID • ${new Date().toLocaleString()}`,14,y);y+=6;doc.setFontSize(8);doc.text('QR: '+getQRData(),14,y);doc.text('Riverdale Apartment Kumasi — Thank you!',14,285);try{const qr=document.getElementById('qrCode')?.querySelector('canvas');if(qr) doc.addImage(qr.toDataURL('image/png'),'PNG',150,60,40,40)}catch(e){}const inv=JSON.parse(localStorage.getItem('rd_invoices')||'[]');inv.unshift({ref,guest:document.getElementById('fn').value+' '+document.getElementById('ln').value,total:grand,date:new Date().toISOString()});localStorage.setItem('rd_invoices',JSON.stringify(inv));const ic=document.getElementById('invoiceCount');if(ic) ic.textContent=inv.length;renderInvoices();if(dl) doc.save(ref+'-Invoice.pdf');}
 function renderInvoices(){const list=document.getElementById('invoiceList');const inv=JSON.parse(localStorage.getItem('rd_invoices')||'[]');if(!list) return;if(!inv.length){list.textContent='No invoices';return}list.innerHTML=inv.map(i=>`<div style="display:flex;justify-content:space-between;padding:10px;border-bottom:1px solid var(--line)"><span><b>${i.ref}</b> • $${i.total}</span><button class="btn btn-g" onclick="generateInvoice(true)">Download</button></div>`).join('')}
 function toggleChat(){document.getElementById('chatBox').classList.toggle('hidden')}
 function openChat(){document.getElementById('chatBox').classList.remove('hidden')}
