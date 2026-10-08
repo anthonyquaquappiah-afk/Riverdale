@@ -184,8 +184,19 @@ function upd(id,k,v){const o=extra.find(x=>x.id===id);if(o)o[k]=v}function rem(i
 function calcG(){const total=1+extra.length;document.getElementById('totalG').textContent=total;document.getElementById('gLabel').textContent=total+' Guest'+(total>1?'s':'');const mg=document.getElementById('myGuests');if(mg) mg.textContent=total;return total}
 function dates(){const today=new Date().toISOString().split('T')[0];const tom=new Date(Date.now()+86400000).toISOString().split('T')[0];document.getElementById('ci').value=today;document.getElementById('co').value=tom;document.getElementById('ci').addEventListener('change',calcN);document.getElementById('co').addEventListener('change',calcN);calcN()}
 function calcN(){const a=new Date(document.getElementById('ci').value),b=new Date(document.getElementById('co').value);if(isNaN(a)||isNaN(b)) return 0;const d=Math.round((b-a)/86400000);const n=d>0?d:0;document.getElementById('nCount').textContent=n+' night(s)';const mn=document.getElementById('myNights');if(mn) mn.textContent=n;return n}
-function renderRooms(){const g=document.getElementById('roomGrid');const pg=document.getElementById('roomsPage');const html=rooms.map(r=>`<div class="room ${selRoom===r.id?'sel':''}" onclick="pick('${r.id}')"><div style="display:flex;justify-content:space-between"><b>${r.name}</b></div><div style="font-size:12px;color:var(--slate)">${r.type} • Max ${r.cap}</div><div style="font-weight:800;color:var(--blue)">$${r.price}/night</div></div>`).join('');if(g) g.innerHTML=html;if(pg) pg.innerHTML=html}
-function pick(id){selRoom=id;renderRooms();const mr=document.getElementById('myRoom');if(mr) mr.textContent=rooms.find(r=>r.id===id)?.name||id}
+function renderRooms(){
+  const g=document.getElementById('roomGrid');
+  const pg=document.getElementById('roomsPage');
+  const html=rooms.map(r=>`
+    <div class="room ${selRoom===r.id?'sel':''}" onclick="pick('${r.id}')">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b>${r.name}</b><span class="badge bg-blue">${r.id}</span></div>
+      <div style="font-size:12px;color:var(--slate);margin:6px 0">${r.type} • Max ${r.cap} guests</div>
+      <div style="font-weight:800;color:var(--blue)">$${r.price}/night</div>
+    </div>
+  `).join('');
+  if(g) g.innerHTML=html;
+  if(pg) pg.innerHTML=html;
+}
 function genRef(){const s='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';let r='RD-';for(let i=0;i<6;i++)r+=s[Math.floor(Math.random()*s.length)];document.getElementById('ref').textContent=r;document.getElementById('receiptRef').textContent=r;document.getElementById('myRef').textContent=r;return r}
 function buildReview(){const nights=calcN();const total=1+extra.length;const roomObj=rooms.find(r=>r.id===selRoom);document.getElementById('review').innerHTML=`<div class="kv"><span>Guest</span><span>${document.getElementById('fn').value} ${document.getElementById('ln').value}</span></div><div class="kv"><span>Email</span><span>${document.getElementById('em').value}</span></div><div class="kv"><span>Guests</span><span>${total}</span></div><div class="kv"><span>Nights</span><span>${nights}</span></div><div class="kv"><span>Room</span><span>${selRoom||'N/A'} $${roomObj?roomObj.price:0}/night • Total $${roomObj?roomObj.price*nights:0}</span></div><div class="kv"><span>Docs</span><span>${files.length} uploaded ✓</span></div>`}
 function getQRData(){const ref=document.getElementById('ref')?.textContent||'RD-XXXXXX';const nights=calcN();const total=1+extra.length;return `RIVERDALE|${ref}|${document.getElementById('fn').value} ${document.getElementById('ln').value}|${document.getElementById('em').value}|${selRoom||'N/A'}|${nights} nights|${total} guests|${new Date().toISOString().split('T')[0]}`}
