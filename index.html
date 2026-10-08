@@ -86,7 +86,22 @@
 }
 
 /* Safe area for iPhone */
-body{padding-bottom: env(safe-area-inset-bottom)}</style>
+body{padding-bottom: env(safe-area-inset-bottom)
+      /* --- FIX OVERFLOW + SMALLER TEXT FOR DASHBOARD --- */
+  h1{font-size:20px!important; line-height:1.25!important; word-break:break-word}
+  #p-dash h1{font-size:20px!important; white-space:normal!important; overflow-wrap:anywhere}
+  #p-dash > p{font-size:11px!important; line-height:1.4}
+  #p-dash div[style*="repeat(4,1fr)"]{
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+  }
+  #p-dash .kpi{padding:12px!important}
+  #p-dash .kpi h3{font-size:13px!important}
+  #p-dash .kpi .val{font-size:20px!important; font-weight:800}
+  #p-dash .card{padding:12px!important}
+  .topbar span{font-size:12px!important}
+  .badge{font-size:10px!important; padding:4px 8px!important}}
+</style>
 </head>
 <body>
 <div id="loginScreen" class="login-wrap"><div class="login-card"><div style="display:flex;gap:12px;align-items:center;margin-bottom:18px"><div class="brand-mark"><i data-lucide="building-2" style="width:20px"></i></div><div><div style="font-weight:800">Riverdale Apartment</div><div style="font-size:11px;color:var(--blue);font-weight:700">KUMASI • GHANA</div></div></div><h2>Sign in</h2><div class="login-tabs"><button class="login-tab active" id="tabGuest" onclick="switchLogin('guest')">Guest</button><button class="login-tab" id="tabAdmin" onclick="switchLogin('admin')">Admin</button></div><div id="guestLogin"><div><label class="lbl">Gmail *</label><input class="inp" id="guestEmail" placeholder="yourname@gmail.com"></div><div style="margin-top:12px"><label class="lbl">Full Name *</label><input class="inp" id="guestName"></div><div style="margin-top:16px"><button class="btn btn-p" style="width:100%" onclick="loginGuest()">Continue</button></div></div><div id="adminLogin" class="hidden"><div><label class="lbl">Admin Email</label><input class="inp" id="adminEmail" value="admin@riverdale.com"></div><div style="margin-top:12px"><label class="lbl">Password</label><input class="inp" type="password" id="adminPass" value="admin123"></div><div style="margin-top:16px"><button class="btn btn-p" style="width:100%" onclick="loginAdmin()">Sign in as Admin</button></div></div></div></div>
